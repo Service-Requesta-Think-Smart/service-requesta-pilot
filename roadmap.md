@@ -1,27 +1,27 @@
 # Service-Requesta — Pilot MVP Roadmap
 
-Status: PILOT / STAGING. Not generally available. No public bookings.
+Status: CONTROLLED PILOT / STAGING. Not generally available. Public bookings, provider dispatch, payments, production email, and commission enforcement remain off.
 
-## Phase 0 inspection (done)
-- Exists: blank TanStack Start + Tailwind v4 + shadcn template, no backend, no auth, no routes beyond placeholder.
-- Missing: everything product-specific.
-- No earlier Service-Requesta repository is present in this project; a previous external app could NOT be audited. To review one: connect it via GitHub to a separate Lovable project or share source; compare against docs/architecture.md.
-- Risks: legal (POPIA, CPA, ECTA), unregistered company, cash commission enforcement, verification overclaiming, payment architecture undecided.
+## Completed in this branch
 
-## Milestones
-- [ ] Current ask: correct and verify schema/RLS/server rules; consent-based sign-in and private demonstration customer create/track flow.
-- [x] M0 Inspection, plan, Lovable Cloud backend enabled
-- [ ] M1a Core database schema (roles, requests, quotes, state machine, ledger, cases, audit, flags) — first attempt rejected and nothing was saved: `provider_can_see_open` refers to `request_responses` before that table exists. Fix: create `request_responses` before the function, then apply again.
-- [ ] M1b Design system, landing (pilot banner), auth, consent/onboarding
-- [ ] M2 Customer request flow + dashboard
-- [ ] M3 Provider profile, verification checks, request inbox accept/decline
-- [ ] M4 Quotes, immutable approved snapshot, job state machine (DB-enforced), completion/disputes
-- [ ] M5 Commission ledger (cents, configurable rate, feature-flagged enforcement)
-- [ ] M6 Admin: checks, jobs, reports/cases, ledger, flags, audit log, metrics
-- [ ] M7 Tests (state machine, commission, due dates), docs, go-live gate checklist
+- [x] Inspected the synced Lovable source, database migration, generated Supabase types, and current routes.
+- [x] Replaced the blank landing page with the Service-Requesta East London pilot experience.
+- [x] Added Supabase email registration, sign-in, sign-out, email confirmation messaging, and password recovery.
+- [x] Added the versioned pilot privacy consent step and profile capture through the existing database function.
+- [x] Added a private customer demonstration request flow with server-side validation, idempotent creation, owner-only history, and cancellation.
+- [x] Added helper checks, automated test/lint/build workflow, and a concise architecture/data-flow note.
 
-## Unresolved decisions (need professional advice)
-- Payment processor / split settlement / fee payer / chargebacks
-- Commissionable base (labour, call-out, parts, discounts, VAT)
-- VAT treatment; retention periods; legal terms; dispute process
-- Language translations (only reviewed ones)
+## Deliberately out of scope for this customer pilot
+
+- Provider registration, provider request inbox, provider verification, quote creation, and job completion.
+- Public booking or dispatch, production email, electronic payment, and cash or commission enforcement.
+- Admin dashboards, provider reviews, live availability, and any unsupported verification or trust claims.
+
+## Next steps before expanding the pilot
+
+- [ ] Run the branch checks and review the app in the Lovable preview with test accounts.
+- [ ] Confirm Supabase email confirmation and password recovery redirect URLs for the preview domain.
+- [ ] Review privacy notice, terms, retention, support contact, and incident handling with qualified advisers.
+- [ ] Complete the provider and admin flows only after access policies and operational processes are reviewed.
+- [ ] Resolve payment, settlement, commissionable base, VAT, and dispute decisions before any payment or fee feature.
+- [ ] Complete the go-live checklist before enabling public bookings or production messaging.
