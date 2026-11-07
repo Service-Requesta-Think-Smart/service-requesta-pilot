@@ -35,7 +35,15 @@ import {
 type Profile = Pick<Tables<"profiles">["Row"], "display_name" | "phone">;
 type ServiceRequest = Pick<
   Tables<"service_requests">["Row"],
-  "id" | "category" | "title" | "description" | "area" | "timing" | "status" | "is_demo" | "created_at"
+  | "id"
+  | "category"
+  | "title"
+  | "description"
+  | "area"
+  | "timing"
+  | "status"
+  | "is_demo"
+  | "created_at"
 >;
 type Notice = { kind: "success" | "error" | "info"; text: string } | null;
 type AuthMode = "sign_in" | "sign_up" | "forgot";
@@ -205,7 +213,7 @@ function ServiceRequestaHome() {
     return () => {
       active = false;
     };
-  }, [session?.user.id, refreshTick]);
+  }, [session, refreshTick]);
 
   async function handleAuthSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -286,7 +294,10 @@ function ServiceRequestaHome() {
   async function handleConsentSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!privacyAccepted) {
-      setNotice({ kind: "error", text: "Please read and accept the pilot privacy notice to continue." });
+      setNotice({
+        kind: "error",
+        text: "Please read and accept the pilot privacy notice to continue.",
+      });
       return;
     }
 
@@ -396,7 +407,11 @@ function ServiceRequestaHome() {
     <div className="min-h-screen bg-brand-cream text-foreground">
       <header className="border-b border-border/80 bg-white/90">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-          <a href="/" className="flex min-w-0 items-center gap-3" aria-label="Service-Requesta home">
+          <a
+            href="/"
+            className="flex min-w-0 items-center gap-3"
+            aria-label="Service-Requesta home"
+          >
             <span className="grid size-11 shrink-0 place-items-center rounded-2xl bg-brand-navy text-sm font-black tracking-tight text-white">
               SR
             </span>
@@ -715,7 +730,9 @@ function ServiceRequestaHome() {
               <div>
                 <Eyebrow light>Private East London pilot</Eyebrow>
                 <h1 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
-                  {profile?.display_name ? "Hello, " + profile.display_name : "Your pilot workspace"}
+                  {profile?.display_name
+                    ? "Hello, " + profile.display_name
+                    : "Your pilot workspace"}
                 </h1>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-white/75 sm:text-base">
                   Save and review demonstration requests for plumbing, electrical, or motor mechanic
@@ -745,7 +762,10 @@ function ServiceRequestaHome() {
                   Keep it simple. Add an area or suburb only; do not include a street address.
                 </p>
 
-                <form onSubmit={(event) => void handleRequestSubmit(event)} className="mt-6 space-y-4">
+                <form
+                  onSubmit={(event) => void handleRequestSubmit(event)}
+                  className="mt-6 space-y-4"
+                >
                   <label className="block text-sm font-semibold">
                     Service type
                     <select
@@ -830,8 +850,8 @@ function ServiceRequestaHome() {
                   </label>
 
                   <div className="rounded-xl bg-brand-sky px-4 py-3 text-xs leading-5 text-brand-navy">
-                    This is a demonstration request. It stays private, is not sent to a provider, and
-                    does not create a booking or fee.
+                    This is a demonstration request. It stays private, is not sent to a provider,
+                    and does not create a booking or fee.
                   </div>
                   <button disabled={requestBusy} className="primary-button w-full">
                     {requestBusy ? (

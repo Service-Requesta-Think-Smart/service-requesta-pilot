@@ -1,7 +1,19 @@
 export const SERVICE_CATEGORIES = [
-  { value: "plumbing", label: "Plumbing", detail: "Leaks, blocked drains, taps, and water systems." },
-  { value: "electrical", label: "Electrical", detail: "Lights, switches, wiring, and electrical faults." },
-  { value: "motor_mechanics", label: "Motor mechanics", detail: "Vehicle servicing and mechanical repairs." },
+  {
+    value: "plumbing",
+    label: "Plumbing",
+    detail: "Leaks, blocked drains, taps, and water systems.",
+  },
+  {
+    value: "electrical",
+    label: "Electrical",
+    detail: "Lights, switches, wiring, and electrical faults.",
+  },
+  {
+    value: "motor_mechanics",
+    label: "Motor mechanics",
+    detail: "Vehicle servicing and mechanical repairs.",
+  },
 ] as const;
 
 export type ServiceCategory = (typeof SERVICE_CATEGORIES)[number]["value"];
@@ -99,7 +111,9 @@ export function formatPilotDate(value: string): string {
 }
 
 export function categoryLabel(value: string): string {
-  return SERVICE_CATEGORIES.find((category) => category.value === value)?.label ?? "Service request";
+  return (
+    SERVICE_CATEGORIES.find((category) => category.value === value)?.label ?? "Service request"
+  );
 }
 
 export function timingLabel(value: string): string {
