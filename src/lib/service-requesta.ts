@@ -86,7 +86,7 @@ export function friendlyError(error: unknown): string {
     return "Please confirm your email, then try signing in again.";
   }
   if (message.includes("user already registered")) {
-    return "That email already has an account. Try signing in instead.";
+    return "Could not create account with those details. Try signing in or resetting your password.";
   }
   if (message.includes("limit of 5 requests per hour")) {
     return "You have reached the pilot limit of 5 requests in one hour. Try again later.";

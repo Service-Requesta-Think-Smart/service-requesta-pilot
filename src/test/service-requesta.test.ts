@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   categoryLabel,
   formatPilotDate,
+  friendlyError,
   normalizeSouthAfricanPhone,
   statusLabel,
   validateRequestDraft,
@@ -14,6 +15,12 @@ describe("Service-Requesta pilot helpers", () => {
     expect(categoryLabel("electrical")).toBe("Electrical");
     expect(categoryLabel("motor_mechanics")).toBe("Motor mechanics");
     expect(categoryLabel("carpentry")).toBe("Service request");
+  });
+
+  it("does not reveal whether an email is already registered", () => {
+    expect(friendlyError({ message: "User already registered" })).toBe(
+      "Could not create account with those details. Try signing in or resetting your password.",
+    );
   });
 
   it("normalizes common South African mobile number formats", () => {
