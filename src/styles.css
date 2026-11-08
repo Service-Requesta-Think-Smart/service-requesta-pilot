@@ -62,20 +62,20 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --radius: 0.5rem;
+  --background: oklch(0.987 0.002 100);
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --primary: oklch(0.86 0.17 89);
+  --primary-foreground: oklch(0.22 0.03 255);
+  --secondary: oklch(0.27 0.045 250);
+  --secondary-foreground: oklch(0.99 0 0);
   --muted: oklch(0.968 0.007 247.896);
   --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
+  --accent: oklch(0.965 0.037 95);
   --accent-foreground: oklch(0.208 0.042 265.755);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
@@ -142,3 +142,22 @@
     color: var(--color-foreground);
   }
 }
+
+:root { --intro-wash: linear-gradient(90deg, oklch(0.987 0.002 100) 0%, oklch(0.987 0.002 100 / 0.95) 30%, oklch(0.987 0.002 100 / 0.15) 80%); --google-bg: #FFFFFF; --google-text: #1F1F1F; --google-border: #747775; }
+body { font-family: 'Manrope', sans-serif; letter-spacing: 0; }
+.page-wrap { width: min(1120px, 100%); margin-inline: auto; padding-inline: 28px; }
+.eyebrow { font-size: 11px; font-weight: 700; color: var(--muted-foreground); }
+.intro-wash { background: var(--intro-wash); }
+.service-tile { background: var(--card); border-color: var(--border); box-shadow: none; }
+.service-tile:hover { border-color: var(--foreground); background: var(--card); }
+.field-label { display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px; font-weight: 600; }
+.field-label > input, .field-label > textarea, .field-label > select { width: 100%; margin-top: 2px; }
+.field-label > input { height: 44px; background: var(--card); }
+.form-textarea, .form-select { display: block; border: 1px solid var(--input); border-radius: 6px; padding: 12px; background: var(--card); font-weight: 400; font-size: 14px; }
+.form-textarea:focus, .form-select:focus { outline: 2px solid var(--ring); outline-offset: 2px; }
+.status-tag { display: inline-flex; padding: 4px 8px; background: var(--accent); color: var(--accent-foreground); border-radius: 4px; font-size: 11px; font-weight: 600; }
+.google-auth { background: var(--google-bg); border-color: var(--google-border); color: var(--google-text); }
+.privacy-copy h2 { font-size: 18px; font-weight: 600; margin-top: 28px; margin-bottom: 10px; }
+.privacy-copy p { font-size: 14px; line-height: 1.8; color: var(--muted-foreground); }
+@media (max-width: 640px) { .page-wrap { padding-inline: 20px; } .workspace-intro img { opacity: 0.45; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
