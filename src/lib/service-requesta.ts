@@ -110,7 +110,7 @@ export function friendlyError(error: unknown): string {
 }
 
 export function parseZarToCents(value: string): number | null {
-  const match = /^(\d{1,9})(?:\.(\d{1,2}))?$/.exec(value.trim());
+  const match = /^(\d{1,10})(?:\.(\d{1,2}))?$/.exec(value.trim());
   if (!match) return null;
   const whole = BigInt(match[1]);
   const fraction = BigInt((match[2] ?? "").padEnd(2, "0"));
