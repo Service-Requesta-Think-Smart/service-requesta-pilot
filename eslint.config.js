@@ -37,9 +37,4 @@ export default tseslint.config(
     },
   },
   eslintPluginPrettier,
-  // Keep linting generated UI/backend code while avoiding incompatible formatter churn.
-  {
-    files: ["src/components/ui/**/*.tsx", "src/integrations/supabase/**/*.ts"],
-    rules: { "prettier/prettier": "off" },
-  },
 );
