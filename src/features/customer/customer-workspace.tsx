@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useServerFn } from '@tanstack/react-start';
 import { useQuery } from '@tanstack/react-query';
@@ -7,31 +7,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useAccount } from '@/features/auth/auth-context';
-import { supabase } from '@/integrations/supabase/client';
-import { ProviderWorkspace } from '@/components/service-requesta/provider-workspace';
-import { MarketplaceWorkspace } from '@/components/service-requesta/marketplace-workspace';
 import { getCustomerData, acceptPrivacy, createRequest, cancelRequest, getRequestEvents } from './customer.functions';
 import { categories, requestSchema, consentSchema, formatDate } from './schema';
 import type { Tables } from '@/integrations/supabase/types';
 import workshop from '@/assets/workshop.jpg';
 
 const icons = { plumbing:Droplets, electrical:Zap, motor_mechanics:Wrench };
-export function CustomerWorkspace({ privateView = false, providerMode = false }: { privateView?:boolean; providerMode?:boolean }) {
+export function CustomerWorkspace({ privateView = false }: { privateView?:boolean }) {
   const { user,ready } = useAccount();
   const fetchData = useServerFn(getCustomerData);
-  const query = useQuery({queryKey:['customer', user?.id],queryFn:() => fetchData(),enabled:ready && !!user,retry:false});
-  const [marketplaceOpen,setMarketplaceOpen] = useState(false);
-  useEffect(() => {
-    let active = true;
-    if (!ready || !user || !query.data?.consent) {
-      setMarketplaceOpen(false);
-      return () => { active = false; };
-    }
-    void supabase.rpc('marketplace_is_open').then(({data,error}) => {
-      if (active) setMarketplaceOpen(!error && data === true);
-    }).catch(() => { if (active) setMarketplaceOpen(false); });
-    return () => { active = false; };
-  },[ready,user?.id,query.data?.consent]);
+  const query = useQuery({queryKey:['customer'],queryFn:() => fetchData(),enabled:ready && !!user,retry:false});
   const [composing,setComposing] = useState(false);
   const [category,setCategory] = useState<'plumbing'|'electrical'|'motor_mechanics'>('plumbing');
   const [selected,setSelected] = useState<string|null>(null);
@@ -40,8 +25,6 @@ export function CustomerWorkspace({ privateView = false, providerMode = false }:
   if (privateView && (!ready || query.isPending)) return <main className="page-wrap py-16"><p className="text-muted-foreground">Loading your requests…</p></main>;
   if(user && query.isError) return <main className="page-wrap py-16"><p role="alert">{query.error.message}</p><Button onClick={()=>query.refetch()} className="mt-4"><RefreshCw/> Try again</Button></main>;
   if(user && query.data && !query.data.consent) return <ConsentForm onSaved={()=>query.refetch()}/>;
-  if(user && providerMode && query.data?.consent) return <ProviderWorkspace userId={user.id} displayName={query.data.profile?.display_name ?? ''}/>;
-  if(user && query.data?.consent && (marketplaceOpen || requests.some(request=>!request.is_demo))) return <main className='page-wrap py-8'><MarketplaceWorkspace userId={user.id} role='customer' displayName={query.data.profile?.display_name ?? ''}/></main>;
   return <main>
     <section className="workspace-intro relative overflow-hidden border-b border-border">
       <img src={workshop} width={1536} height={768} alt="Plumbing tools and fittings on a workshop bench" className="absolute inset-0 h-full w-full object-cover"/>
@@ -49,7 +32,7 @@ export function CustomerWorkspace({ privateView = false, providerMode = false }:
       <div className="page-wrap relative py-10 sm:py-12">
         <div className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase text-muted-foreground"><span className="h-2 w-2 rounded-full bg-primary"/> East London pilot</div>
         <h1 className="max-w-lg text-3xl font-bold sm:text-4xl">{user ? `Welcome${query.data?.profile?.display_name ? `, ${query.data.profile.display_name}`:''}.` : 'Service-Requesta'}</h1>
-        <p className="mt-3 max-w-sm text-base text-muted-foreground">{user ? 'Your local service requests, all in one place.' : 'Think Smart. Find structured local service help.'}</p>
+        <p className="mt-3 max-w-sm text-base text-muted-foreground">{user ? 'Your local service requests, all in one place.' : 'Local skills. Clear requests. Better connections.'}</p>
         <div className="mt-7 flex items-center gap-2 text-sm"><MapPin className="size-4"/> East London, Eastern Cape</div>
       </div>
     </section>

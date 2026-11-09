@@ -152,16 +152,22 @@ export type Database = {
       completion_confirmations: {
         Row: {
           confirmed_at: string
+          final_amount_cents: number | null
+          payment_method: string | null
           request_id: string
           user_id: string
         }
         Insert: {
           confirmed_at?: string
+          final_amount_cents?: number | null
+          payment_method?: string | null
           request_id: string
           user_id: string
         }
         Update: {
           confirmed_at?: string
+          final_amount_cents?: number | null
+          payment_method?: string | null
           request_id?: string
           user_id?: string
         }
@@ -210,7 +216,9 @@ export type Database = {
       }
       fee_notices: {
         Row: {
+          dispute_note: string | null
           disputed: boolean
+          disputed_at: string | null
           due_at: string
           final_notice_at: string | null
           id: string
@@ -218,7 +226,9 @@ export type Database = {
           notice_at: string
         }
         Insert: {
+          dispute_note?: string | null
           disputed?: boolean
+          disputed_at?: string | null
           due_at: string
           final_notice_at?: string | null
           id?: string
@@ -226,7 +236,9 @@ export type Database = {
           notice_at?: string
         }
         Update: {
+          dispute_note?: string | null
           disputed?: boolean
+          disputed_at?: string | null
           due_at?: string
           final_notice_at?: string | null
           id?: string
@@ -427,6 +439,38 @@ export type Database = {
           },
         ]
       }
+      request_private_details: {
+        Row: {
+          contact_phone: string
+          customer_id: string
+          request_id: string
+          service_address: string
+          shared_at: string
+        }
+        Insert: {
+          contact_phone: string
+          customer_id: string
+          request_id: string
+          service_address: string
+          shared_at?: string
+        }
+        Update: {
+          contact_phone?: string
+          customer_id?: string
+          request_id?: string
+          service_address?: string
+          shared_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "request_private_details_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: true
+            referencedRelation: "service_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       request_responses: {
         Row: {
           created_at: string
@@ -467,6 +511,7 @@ export type Database = {
           created_at: string
           customer_id: string
           description: string
+          disputed_from_status: string | null
           id: string
           idempotency_key: string
           is_demo: boolean
@@ -483,6 +528,7 @@ export type Database = {
           created_at?: string
           customer_id: string
           description: string
+          disputed_from_status?: string | null
           id?: string
           idempotency_key: string
           is_demo?: boolean
@@ -499,6 +545,7 @@ export type Database = {
           created_at?: string
           customer_id?: string
           description?: string
+          disputed_from_status?: string | null
           id?: string
           idempotency_key?: string
           is_demo?: boolean
@@ -518,6 +565,9 @@ export type Database = {
           kind: string
           opened_by: string
           request_id: string | null
+          resolution_note: string | null
+          resolved_at: string | null
+          resolved_by: string | null
           status: string
         }
         Insert: {
@@ -527,6 +577,9 @@ export type Database = {
           kind: string
           opened_by: string
           request_id?: string | null
+          resolution_note?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
           status?: string
         }
         Update: {
@@ -536,6 +589,9 @@ export type Database = {
           kind?: string
           opened_by?: string
           request_id?: string | null
+          resolution_note?: string | null
+          resolved_at?: string | null
+          resolved_by?: string | null
           status?: string
         }
         Relationships: [
@@ -599,25 +655,9 @@ export type Database = {
         }
         Returns: boolean
       }
-      marketplace_admin_list_cases: {
-        Args: never
-        Returns: {
-          case_id: string
-          created_at: string
-          description: string
-          kind: string
-          opened_by: string
-          request_category: string
-          request_id: string
-          request_status: string
-          request_title: string
-          status: string
-        }[]
-      }
-      select_account_type: { Args: { p_account_type: string }; Returns: undefined }
-      marketplace_is_open: { Args: never; Returns: boolean }
       marketplace_create_request: {
         Args: {
+          p_area: string
           p_category: string
           p_contact_phone: string
           p_description: string
@@ -626,54 +666,21 @@ export type Database = {
           p_share_private_details: boolean
           p_timing: string
           p_title: string
-          p_area: string
         }
         Returns: string
       }
       marketplace_get_provider_contact: {
         Args: { p_request_id: string }
-        Returns: { contact_phone: string; service_address: string }[]
+        Returns: {
+          contact_phone: string
+          service_address: string
+        }[]
       }
+      marketplace_is_open: { Args: never; Returns: boolean }
       marketplace_respond_to_request: {
         Args: { p_decision: string; p_request_id: string }
         Returns: undefined
       }
-      marketplace_submit_quote: {
-        Args: {
-          p_assumptions: string
-          p_callout_cents: number
-          p_labour_cents: number
-          p_parts_cents: number
-          p_request_id: string
-          p_scope: string
-          p_timing: string
-        }
-        Returns: string
-      }
-      marketplace_approve_quote: {
-        Args: { p_quote_id: string; p_request_id: string }
-        Returns: undefined
-      }
-      marketplace_start_work: { Args: { p_request_id: string }; Returns: undefined }
-      marketplace_mark_work_ready: { Args: { p_request_id: string }; Returns: undefined }
-      marketplace_confirm_completion: {
-        Args: { p_final_amount_cents: number; p_payment_method: string; p_request_id: string }
-        Returns: undefined
-      }
-      marketplace_cancel_request: { Args: { p_request_id: string }; Returns: undefined }
-      marketplace_open_dispute: {
-        Args: { p_description: string; p_kind: string; p_request_id: string }
-        Returns: string
-      }
-      marketplace_resolve_dispute: {
-        Args: { p_case_id: string; p_note: string; p_outcome: string }
-        Returns: undefined
-      }
-      marketplace_dispute_fee_notice: {
-        Args: { p_note: string; p_notice_id: string }
-        Returns: undefined
-      }
-      marketplace_issue_final_fee_notice: { Args: { p_notice_id: string }; Returns: undefined }
       provider_can_see_open: {
         Args: { p_request_id: string }
         Returns: boolean
@@ -686,6 +693,10 @@ export type Database = {
           p_provider_id: string
           p_trade_status: string
         }
+        Returns: undefined
+      }
+      select_account_type: {
+        Args: { p_account_type: string }
         Returns: undefined
       }
       submit_provider_application: {

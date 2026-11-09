@@ -84,10 +84,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Service-Requesta" },
-      { name: "description", content: "Think Smart. Service-Requesta’s private East London pilot." },
+      { name: "description", content: "Local skills. Clear requests. Better connections. East London private pilot." },
       
       { property: "og:title", content: "Service-Requesta" },
-      { property: "og:description", content: "Think Smart. Service-Requesta’s private East London pilot." },
+      { property: "og:description", content: "Local skills. Clear requests. Better connections. East London private pilot." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       
@@ -131,7 +131,7 @@ function RootComponent() {
     let live = true;
     const refresh = async () => { const {data} = await supabase.auth.getUser(); if(live) { setUser(data.user); setReady(true); } };
     const {data:{subscription}} = supabase.auth.onAuthStateChange(event => {
-      if(event !== 'SIGNED_IN' && event !== 'SIGNED_OUT' && event !== 'USER_UPDATED' && event !== 'PASSWORD_RECOVERY') return;
+      if(event !== 'SIGNED_IN' && event !== 'SIGNED_OUT' && event !== 'USER_UPDATED') return;
       void refresh();
       void router.invalidate();
       if(event !== 'SIGNED_OUT') void queryClient.invalidateQueries();

@@ -1,26 +1,38 @@
-# Service-Requesta MVP readiness
+# Service-Requesta — Pilot MVP Roadmap
 
-**Brand:** Service-Requesta · **Slogan:** Think Smart  
-**Status:** Controlled pilot. Public bookings and provider dispatch remain closed.
+Status: PILOT / STAGING. Not generally available. No public bookings.
 
-## Implemented in code
+## Phase 0 inspection (done)
+- Exists: blank TanStack Start + Tailwind v4 + shadcn template, no backend, no auth, no routes beyond placeholder.
+- Missing: everything product-specific.
+- No earlier Service-Requesta repository is present in this project; a previous external app could NOT be audited. To review one: connect it via GitHub to a separate Lovable project or share source; compare against docs/architecture.md.
+- Risks: legal (POPIA, CPA, ECTA), unregistered company, cash commission enforcement, verification overclaiming, payment architecture undecided.
 
-- Shared customer/provider authentication with separate post-sign-up paths.
-- Customer privacy consent and private demonstration requests.
-- Provider application, separate identity/contact and trade-evidence review, and admin audit.
-- Gated matching, provider accept/decline, written quotes, customer approval, job progression, completion confirmation, disputes, and support review.
-- Integer-cent quote and commission calculations.
-- Provider commission statements and dispute records, conditional on legally approved configuration.
+## Milestones
+- [ ] Payments: built-in providers unavailable for ZA service marketplace; external processor and release approval required. Live payments stay off.
+- [x] Current ask: correct and verify schema/RLS/server rules; consent-based sign-in and private demonstration customer create/track flow.
+- [x] M0 Inspection, plan, Lovable Cloud backend enabled
+- [x] M1a Corrected core schema applied; RLS and triggers inspected; explicit least-privilege grants applied. Future quote/provider/commission workflows are not operational yet.
+- [x] M1b Mobile customer workspace, pilot banner, existing email/social sign-in, consent/onboarding. No production email activated.
+- [x] M2 Private demo request creation, review, tracking/history, cancellation and persistence. Verified through requesting-user account.
+- [ ] M3 Provider profile, verification checks, request inbox accept/decline
+- [ ] M4 Quotes, immutable approved snapshot, job state machine (DB-enforced), completion/disputes
+- [ ] M5 Commission ledger (cents, configurable rate, feature-flagged enforcement)
+- [ ] M6 Admin: checks, jobs, reports/cases, ledger, flags, audit log, metrics
+- [ ] M7 Tests (state machine, commission, due dates), docs, go-live gate checklist
 
-## Required before live use
+## Unresolved decisions (need professional advice)
+- Payment processor / split settlement / fee payer / chargebacks
+- Commissionable base (labour, call-out, parts, discounts, VAT)
+- VAT treatment; retention periods; legal terms; dispute process
+- Language translations (only reviewed ones)
 
-1. Apply and verify the provider onboarding and marketplace migrations in the linked Supabase project.
-2. Review the customer/provider journeys in the Lovable preview after GitHub sync.
-3. Obtain South African legal and accounting approval for provider terms, the proposed 15% commission, its base, cancellations/refunds, tax treatment, data retention, complaints, and cash collection.
-4. Configure the approved commission version and test with controlled accounts.
-5. Review authentication email delivery, support ownership, provider checks, operational response, and backup/monitoring.
-6. Only then consider enabling public_bookings, legal_approval, and commission_enforcement together.
-
-## Deliberately unavailable
-
-No electronic payment processor, cash-transfer verification, email reminders, automatic debt collection, automated provider matching by availability, or automatic provider restrictions are included. No fee is charged for a demo, lead, incomplete job, or cancelled job.
+## Milestone verification (9 November 2026 UTC)
+- 16 tests passed: 6 unit/routing and 10 live authenticated access/transaction checks.
+- Browser: authenticated create → history readback → cancel → reload persistence → mobile overflow check → sign-out protection passed.
+- Core database tables have RLS; customer ownership, consent, no self-admin and blocked direct writes tested. Explicit least-privilege grants remove inherited anonymous access.
+- Customer profile creation verified for existing accounts; hosted OAuth popup round-trip and email-password credential sign-in were not exercised.
+- Installed job-transition, immutable records, dual-completion and money/notice triggers inspected; their full adversarial real-job tests remain future work.
+- Test-only requests are labelled demonstration and cancelled; no providers or money involved.
+- Latest automated build reported OK. Six intentional authenticated security-definer functions remain advisor warnings and require continued security review.
+- Payment task blocked: built-in payment providers unavailable for ZA service marketplace. External processor, legal/company approval and settlement decisions required. No payments enabled.

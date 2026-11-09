@@ -8,6 +8,13 @@
       "when": 1794046330317,
       "tag": "0000_service_requesta_core_corrected",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794193202793,
+      "tag": "0001_least_privilege_pilot_grants",
+      "breakpoints": true
     }
   ]
 }
