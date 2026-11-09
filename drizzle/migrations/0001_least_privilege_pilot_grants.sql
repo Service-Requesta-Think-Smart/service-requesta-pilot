@@ -1,0 +1,5 @@
+REVOKE ALL ON public.profiles, public.user_roles, public.consents, public.feature_flags, public.audit_events, public.service_requests, public.provider_profiles, public.request_responses, public.request_events, public.quotes, public.approved_quotes, public.completion_confirmations, public.support_cases, public.commission_versions, public.commission_ledger, public.fee_notices, public.identity_documents FROM anon;
+REVOKE INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER ON public.user_roles, public.consents, public.feature_flags, public.audit_events, public.service_requests, public.provider_profiles, public.request_responses, public.request_events, public.quotes, public.approved_quotes, public.completion_confirmations, public.support_cases, public.commission_versions, public.commission_ledger, public.fee_notices, public.identity_documents FROM authenticated;
+REVOKE INSERT, DELETE, TRUNCATE, REFERENCES, TRIGGER ON public.profiles FROM authenticated;
+REVOKE UPDATE ON public.profiles FROM authenticated;
+GRANT UPDATE(display_name,phone) ON public.profiles TO authenticated;
