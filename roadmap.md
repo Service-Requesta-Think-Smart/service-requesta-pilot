@@ -10,11 +10,11 @@ Status: PILOT / STAGING. Not generally available. No public bookings.
 
 ## Milestones
 - [ ] Payments: built-in providers unavailable for ZA service marketplace; external processor and release approval required. Live payments stay off.
-- [ ] Current ask: correct and verify schema/RLS/server rules; consent-based sign-in and private demonstration customer create/track flow.
+- [x] Current ask: correct and verify schema/RLS/server rules; consent-based sign-in and private demonstration customer create/track flow.
 - [x] M0 Inspection, plan, Lovable Cloud backend enabled
-- [ ] M1a Core database schema (roles, requests, quotes, state machine, ledger, cases, audit, flags) — first attempt rejected and nothing was saved: `provider_can_see_open` refers to `request_responses` before that table exists. Fix: create `request_responses` before the function, then apply again.
-- [ ] M1b Design system, landing (pilot banner), auth, consent/onboarding
-- [ ] M2 Customer request flow + dashboard
+- [x] M1a Corrected core schema applied; RLS and triggers inspected; explicit least-privilege grants applied. Future quote/provider/commission workflows are not operational yet.
+- [x] M1b Mobile customer workspace, pilot banner, existing email/social sign-in, consent/onboarding. No production email activated.
+- [x] M2 Private demo request creation, review, tracking/history, cancellation and persistence. Verified through requesting-user account.
 - [ ] M3 Provider profile, verification checks, request inbox accept/decline
 - [ ] M4 Quotes, immutable approved snapshot, job state machine (DB-enforced), completion/disputes
 - [ ] M5 Commission ledger (cents, configurable rate, feature-flagged enforcement)
@@ -26,3 +26,13 @@ Status: PILOT / STAGING. Not generally available. No public bookings.
 - Commissionable base (labour, call-out, parts, discounts, VAT)
 - VAT treatment; retention periods; legal terms; dispute process
 - Language translations (only reviewed ones)
+
+## Milestone verification (9 November 2026 UTC)
+- 16 tests passed: 6 unit/routing and 10 live authenticated access/transaction checks.
+- Browser: authenticated create → history readback → cancel → reload persistence → mobile overflow check → sign-out protection passed.
+- Core database tables have RLS; customer ownership, consent, no self-admin and blocked direct writes tested. Explicit least-privilege grants remove inherited anonymous access.
+- Customer profile creation verified for existing accounts; hosted OAuth popup round-trip and email-password credential sign-in were not exercised.
+- Installed job-transition, immutable records, dual-completion and money/notice triggers inspected; their full adversarial real-job tests remain future work.
+- Test-only requests are labelled demonstration and cancelled; no providers or money involved.
+- Latest automated build reported OK. Six intentional authenticated security-definer functions remain advisor warnings and require continued security review.
+- Payment task blocked: built-in payment providers unavailable for ZA service marketplace. External processor, legal/company approval and settlement decisions required. No payments enabled.

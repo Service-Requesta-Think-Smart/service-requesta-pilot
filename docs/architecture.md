@@ -5,7 +5,7 @@ Browser → authenticated TanStack server functions → user-scoped Cloud client
 Public / is a usable customer workspace; /auth and /privacy are public. /requests is under the client-only managed authentication gate. The root has one identity-transition subscription. Sign-out cancels queries, clears cached private records, signs out, then replaces the URL.
 
 ## Rules
-All 17 application tables have RLS. Customer request creation and cancellation use authenticated transactional functions; direct writes are not permitted by policy. Creation is serialized per user, limited to five per hour, and idempotent. Every created request is hardcoded demonstration-only; no route creates real jobs. Consent records are timestamped in the database. Accounts auto-create private profiles and customer roles; admin is not assignable by users.
+All core application tables have RLS. Customer request creation and cancellation use authenticated transactional functions; direct writes are not permitted by policy. Creation is serialized per user, limited to five per hour, and idempotent. Every created request is hardcoded demonstration-only; no route creates real jobs. Consent records are timestamped in the database. Accounts auto-create private profiles and customer roles; admin is not assignable by users.
 Future quote, completion, ledger, support and document schema is present but has no client write policies or operational provider/admin workflow. Immutable snapshots, audit/history/ledger triggers and job-state/dual-completion validation are installed. Commission has integer-cent calculation and an approved-version guard. These foundations are not a verified production money-collection system.
 
 ## Current limitations
