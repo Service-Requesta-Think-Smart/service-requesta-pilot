@@ -13,7 +13,7 @@ export const getCustomerData = createServerFn({ method: 'GET' }).middleware([req
   return { consent: !!consent.data, profile:profile.data, requests:requests.data ?? [] };
 });
 export const acceptPrivacy = createServerFn({ method:'POST' }).middleware([requireSupabaseAuth]).inputValidator((input:unknown) => consentSchema.parse(input)).handler(async ({ data, context }) => {
-  const result = await context.supabase.rpc('accept_pilot_privacy', { p_name:data.name, p_phone:data.phone ?? undefined });
+  const result = await context.supabase.rpc('accept_pilot_privacy', { p_name:data.name, ...(data.phone ? { p_phone:data.phone } : {}) });
   if(result.error) throw new Error('Consent could not be saved. Please try again.');
   return { saved:true };
 });
