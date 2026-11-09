@@ -9,7 +9,7 @@ const suite = token && url && key && uid ? describe : describe.skip;
 suite('Live pilot access rules',()=>{
  function client(authenticated=true){return createClient(url ?? '',key ?? '',{auth:{persistSession:false,autoRefreshToken:false},global:{headers:authenticated?{Authorization:`Bearer ${token}`}:{}}});}
  it('anonymous users cannot read customer requests',async()=>{
-  const result=await client(false).from('service_requests').select('id');expect(result.error).not.toBeNull();
+  const result=await client(false).from('service_requests').select('id');expect(result.data ?? []).toEqual([]);
  });
  it('customers can read only their own persisted requests',async()=>{
   const result=await client().from('service_requests').select('customer_id,is_demo');expect(result.error).toBeNull();expect(result.data?.length).toBeGreaterThan(0);for(const row of result.data ?? []){expect(row.customer_id).toBe(uid);expect(row.is_demo).toBe(true);}
@@ -21,7 +21,12 @@ suite('Live pilot access rules',()=>{
   const result=await client().from('user_roles').insert({user_id:uid,role:'admin'});expect(result.error).not.toBeNull();
  });
  it('customers cannot bypass request mutation rules',async()=>{
-  const result=await client().from('service_requests').update({status:'completed'}).eq('customer_id',uid);expect(result.error).not.toBeNull();
+  const c=client();
+  const before=await c.from('service_requests').select('id,status').eq('customer_id',uid).order('id');
+  expect(before.error).toBeNull();expect(before.data?.length).toBeGreaterThan(0);
+  await c.from('service_requests').update({status:'completed'}).eq('customer_id',uid);
+  const after=await c.from('service_requests').select('id,status').eq('customer_id',uid).order('id');
+  expect(after.error).toBeNull();expect(after.data).toEqual(before.data);
  });
  it('unknown request cancellation is rejected server-side',async()=>{
   const result=await client().rpc('cancel_service_request',{p_id:'11111111-1111-4111-8111-111111111111'});expect(result.error).not.toBeNull();
