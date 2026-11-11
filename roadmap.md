@@ -9,6 +9,7 @@ Status: PILOT / STAGING. Not generally available. No public bookings.
 - Risks: legal (POPIA, CPA, ECTA), unregistered company, cash commission enforcement, verification overclaiming, payment architecture undecided.
 
 ## Milestones
+- [ ] SEO heading correction: descriptive single H1 for homepage, sign-in and every customer state.
 - [ ] Payments: built-in providers unavailable for ZA service marketplace; external processor and release approval required. Live payments stay off.
 - [x] Current ask: correct and verify schema/RLS/server rules; consent-based sign-in and private demonstration customer create/track flow.
 - [x] M0 Inspection, plan, Lovable Cloud backend enabled
