@@ -22,17 +22,18 @@ export function CustomerWorkspace({ privateView = false }: { privateView?:boolea
   const [selected,setSelected] = useState<string|null>(null);
   const requests = query.data?.requests ?? [];
   const current = requests.find(r=>r.id===selected);
-  if (privateView && (!ready || query.isPending)) return <main className="page-wrap py-16"><p className="text-muted-foreground">Loading your requests…</p></main>;
-  if(user && query.isError) return <main className="page-wrap py-16"><p role="alert">{query.error.message}</p><Button onClick={()=>query.refetch()} className="mt-4"><RefreshCw/> Try again</Button></main>;
-  if(user && query.data && !query.data.consent) return <ConsentForm onSaved={()=>query.refetch()}/>;
+  const heading = privateView ? 'Create and track East London service requests' : 'East London home and vehicle service requests';
+  if (privateView && (!ready || query.isPending)) return <main className="page-wrap py-16"><h1 className="text-3xl font-semibold">{heading}</h1><p className="mt-4 text-muted-foreground">Loading your requests…</p></main>;
+  if(user && query.isError) return <main className="page-wrap py-16"><h1 className="text-3xl font-semibold">{heading}</h1><p role="alert" className="mt-4">{query.error.message}</p><Button onClick={()=>query.refetch()} className="mt-4"><RefreshCw/> Try again</Button></main>;
+  if(user && query.data && !query.data.consent) return <ConsentForm heading={heading} onSaved={()=>query.refetch()}/>;
   return <main>
     <section className="workspace-intro relative overflow-hidden border-b border-border">
       <img src={workshop} width={1536} height={768} alt="Plumbing tools and fittings on a workshop bench" className="absolute inset-0 h-full w-full object-cover"/>
       <div className="intro-wash absolute inset-0"/>
       <div className="page-wrap relative py-10 sm:py-12">
         <div className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase text-muted-foreground"><span className="h-2 w-2 rounded-full bg-primary"/> East London pilot</div>
-        <h1 className="max-w-lg text-3xl font-bold sm:text-4xl">{user ? `Welcome${query.data?.profile?.display_name ? `, ${query.data.profile.display_name}`:''}.` : 'Service-Requesta'}</h1>
-        <p className="mt-3 max-w-sm text-base text-muted-foreground">{user ? 'Your local service requests, all in one place.' : 'Local skills. Clear requests. Better connections.'}</p>
+        <h1 className="max-w-lg text-3xl font-bold sm:text-4xl">{heading}</h1>
+        <p className="mt-3 max-w-sm text-base text-muted-foreground">Service-Requesta · Local skills. Clear requests. Better connections.</p>
         <div className="mt-7 flex items-center gap-2 text-sm"><MapPin className="size-4"/> East London, Eastern Cape</div>
       </div>
     </section>
@@ -53,10 +54,10 @@ export function CustomerWorkspace({ privateView = false }: { privateView?:boolea
   </main>;
 }
 
-function ConsentForm({ onSaved }: { onSaved:()=>unknown }) {
+function ConsentForm({ onSaved, heading }: { onSaved:()=>unknown; heading:string }) {
   const save=useServerFn(acceptPrivacy); const [busy,setBusy]=useState(false);const [accepted,setAccepted]=useState(false);const [error,setError]=useState('');
   async function submit(e:FormEvent<HTMLFormElement>) { e.preventDefault(); const form=new FormData(e.currentTarget);setError('');try { const data=consentSchema.parse({name:form.get('name'),phone:form.get('phone'),accepted});setBusy(true);await save({data});await onSaved(); } catch(e){setError(e instanceof Error ? (e.message.startsWith('[')?'Check your name, phone number and privacy consent.':e.message):'Consent could not be saved.');}finally{setBusy(false);} }
-  return <main className="page-wrap py-12"><div className="mx-auto max-w-lg"><ShieldCheck className="mb-5 size-10 text-muted-foreground"/><p className="eyebrow">PRIVATE PILOT ACCOUNT</p><h1 className="mt-2 text-3xl font-semibold">A little about you</h1><p className="mt-4 text-muted-foreground">This is a pre-launch demonstration. Use a demonstration name and avoid sensitive or residential-address details.</p><form onSubmit={submit} className="mt-8 space-y-5"><label className="field-label">Display name<Input name="name" required maxLength={100} autoComplete="nickname"/></label><label className="field-label">Phone number <span className="font-normal text-muted-foreground">(optional)</span><Input name="phone" type="tel" maxLength={30} placeholder="082 123 4567" autoComplete="tel"/></label><div className="flex items-start gap-3"><Checkbox id="privacy-consent" checked={accepted} onCheckedChange={v=>setAccepted(v===true)}/><label htmlFor="privacy-consent" className="text-sm leading-6">I have read the <Link to="/privacy" className="underline">pilot privacy notice</Link> and agree to storing my account details and demonstration requests for this pilot. No marketing consent is requested.</label></div>{error&&<p role="alert" className="text-sm text-destructive">{error}</p>}<Button disabled={busy||!accepted} className="h-11 w-full">{busy?'Saving…':'Save and continue'}<ArrowRight/></Button></form></div></main>;
+  return <main className="page-wrap py-12"><div className="mx-auto max-w-lg"><ShieldCheck className="mb-5 size-10 text-muted-foreground"/><p className="eyebrow">PRIVATE PILOT ACCOUNT</p><h1 className="mt-2 text-3xl font-semibold">{heading}</h1><h2 className="mt-5 text-xl font-semibold">Your pilot profile and privacy consent</h2><p className="mt-4 text-muted-foreground">This is a pre-launch demonstration. Use a demonstration name and avoid sensitive or residential-address details.</p><form onSubmit={submit} className="mt-8 space-y-5"><label className="field-label">Display name<Input name="name" required maxLength={100} autoComplete="nickname"/></label><label className="field-label">Phone number <span className="font-normal text-muted-foreground">(optional)</span><Input name="phone" type="tel" maxLength={30} placeholder="082 123 4567" autoComplete="tel"/></label><div className="flex items-start gap-3"><Checkbox id="privacy-consent" checked={accepted} onCheckedChange={v=>setAccepted(v===true)}/><label htmlFor="privacy-consent" className="text-sm leading-6">I have read the <Link to="/privacy" className="underline">pilot privacy notice</Link> and agree to storing my account details and demonstration requests for this pilot. No marketing consent is requested.</label></div>{error&&<p role="alert" className="text-sm text-destructive">{error}</p>}<Button disabled={busy||!accepted} className="h-11 w-full">{busy?'Saving…':'Save and continue'}<ArrowRight/></Button></form></div></main>;
 }
 function RequestForm({initialCategory,onBack,onSaved}:{initialCategory:'plumbing'|'electrical'|'motor_mechanics';onBack:()=>void;onSaved:(id:string)=>unknown}) {
   const save=useServerFn(createRequest);const [step,setStep]=useState(1);const [category,setCategory]=useState(initialCategory);const [title,setTitle]=useState('');const [description,setDescription]=useState('');const [area,setArea]=useState('');const [timing,setTiming]=useState('flexible');const [key]=useState(()=>crypto.randomUUID());const [error,setError]=useState('');const [busy,setBusy]=useState(false);

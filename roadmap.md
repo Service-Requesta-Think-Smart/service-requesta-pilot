@@ -9,6 +9,7 @@ Status: PILOT / STAGING. Not generally available. No public bookings.
 - Risks: legal (POPIA, CPA, ECTA), unregistered company, cash commission enforcement, verification overclaiming, payment architecture undecided.
 
 ## Milestones
+- [x] SEO heading correction: descriptive single H1 for homepage, sign-in and every customer state.
 - [ ] Payments: built-in providers unavailable for ZA service marketplace; external processor and release approval required. Live payments stay off.
 - [x] Current ask: correct and verify schema/RLS/server rules; consent-based sign-in and private demonstration customer create/track flow.
 - [x] M0 Inspection, plan, Lovable Cloud backend enabled
@@ -34,5 +35,5 @@ Status: PILOT / STAGING. Not generally available. No public bookings.
 - Customer profile creation verified for existing accounts; hosted OAuth popup round-trip and email-password credential sign-in were not exercised.
 - Installed job-transition, immutable records, dual-completion and money/notice triggers inspected; their full adversarial real-job tests remain future work.
 - Test-only requests are labelled demonstration and cancelled; no providers or money involved.
-- Latest automated build reported OK. Six intentional authenticated security-definer functions remain advisor warnings and require continued security review.
+- Latest automated build reported OK. Thirteen authenticated security-definer functions were reported in the latest advisor check; these remain warnings and require continued security review.
 - Payment task blocked: built-in payment providers unavailable for ZA service marketplace. External processor, legal/company approval and settlement decisions required. No payments enabled.
