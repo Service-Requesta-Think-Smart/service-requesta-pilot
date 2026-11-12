@@ -99,7 +99,7 @@ export function MarketplacePreview() {
     </section>
 
     <div className="mt-6 flex flex-wrap gap-2" role="tablist" aria-label="Demo role">
-      {(['customer', 'provider', 'admin'] as const).map(item => <Button key={item} role="tab" aria-selected={role === item} variant={role === item ? 'default' : 'outline'} onClick={() => setRole(item)}>{item === 'customer' ? <UserRound/> : item === 'provider' ? <Wrench/> : <ShieldCheck/>}{item[0].toUpperCase() + item.slice(1)} view</Button>)}
+      {(['customer', 'provider', 'admin'] as const).map(item => <Button key={item} role="tab" aria-selected={role === item} variant={role === item ? 'default' : 'outline'} onClick={() => setRole(item)}>{item === 'customer' ? <UserRound/> : item === 'provider' ? <Wrench/> : <ShieldCheck/>}{item.charAt(0).toUpperCase() + item.slice(1)} view</Button>)}
     </div>
 
     <section className="mt-4 rounded-xl border bg-card p-5 sm:p-6" aria-live="polite">
