@@ -15,6 +15,13 @@
       "when": 1794193202793,
       "tag": "0001_least_privilege_pilot_grants",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794502652793,
+      "tag": "0002_provider_quote_job_support_workflow",
+      "breakpoints": true
     }
   ]
 }

@@ -359,40 +359,49 @@ export type Database = {
           assumptions: string
           callout_cents: number
           created_at: string
+          expires_at: string | null
           id: string
           labour_cents: number
           parts_cents: number
+          parts_is_estimate: boolean
           provider_id: string
           request_id: string
           scope: string
           timing: string
           total_cents: number | null
+          version: number
         }
         Insert: {
           assumptions: string
           callout_cents: number
           created_at?: string
+          expires_at?: string | null
           id?: string
           labour_cents: number
           parts_cents: number
+          parts_is_estimate?: boolean
           provider_id: string
           request_id: string
           scope: string
           timing: string
           total_cents?: number | null
+          version?: number
         }
         Update: {
           assumptions?: string
           callout_cents?: number
           created_at?: string
+          expires_at?: string | null
           id?: string
           labour_cents?: number
           parts_cents?: number
+          parts_is_estimate?: boolean
           provider_id?: string
           request_id?: string
           scope?: string
           timing?: string
           total_cents?: number | null
+          version?: number
         }
         Relationships: [
           {
@@ -508,6 +517,7 @@ export type Database = {
           area: string
           category: string
           city: string
+          closure_reason: string | null
           created_at: string
           customer_id: string
           description: string
@@ -525,6 +535,7 @@ export type Database = {
           area: string
           category: string
           city?: string
+          closure_reason?: string | null
           created_at?: string
           customer_id: string
           description: string
@@ -542,6 +553,7 @@ export type Database = {
           area?: string
           category?: string
           city?: string
+          closure_reason?: string | null
           created_at?: string
           customer_id?: string
           description?: string
@@ -631,6 +643,10 @@ export type Database = {
         Args: { p_name: string; p_phone?: string }
         Returns: undefined
       }
+      admin_resolve_support_case: {
+        Args: { p_case_id: string; p_dispute_outcome: string; p_note: string }
+        Returns: undefined
+      }
       calculate_commission: {
         Args: { p_base: number; p_bps: number }
         Returns: number
@@ -655,6 +671,31 @@ export type Database = {
         }
         Returns: boolean
       }
+      marketplace_advance_job: {
+        Args: { p_request_id: string; p_to: string }
+        Returns: undefined
+      }
+      marketplace_approve_quote: {
+        Args: {
+          p_price_confirmed: boolean
+          p_quote_id: string
+          p_request_id: string
+          p_scope_confirmed: boolean
+        }
+        Returns: undefined
+      }
+      marketplace_assigned_provider: {
+        Args: { p_request_id: string }
+        Returns: string
+      }
+      marketplace_cancel_job: {
+        Args: { p_reason: string; p_request_id: string }
+        Returns: undefined
+      }
+      marketplace_confirm_completion: {
+        Args: { p_request_id: string }
+        Returns: string
+      }
       marketplace_create_request: {
         Args: {
           p_area: string
@@ -677,9 +718,31 @@ export type Database = {
         }[]
       }
       marketplace_is_open: { Args: never; Returns: boolean }
+      marketplace_open_dispute: {
+        Args: { p_reason: string; p_request_id: string }
+        Returns: string
+      }
       marketplace_respond_to_request: {
         Args: { p_decision: string; p_request_id: string }
         Returns: undefined
+      }
+      marketplace_submit_quote: {
+        Args: {
+          p_assumptions: string
+          p_callout_cents: number
+          p_expires_at: string
+          p_labour_cents: number
+          p_parts_cents: number
+          p_parts_is_estimate: boolean
+          p_request_id: string
+          p_scope: string
+          p_timing: string
+        }
+        Returns: string
+      }
+      open_support_case: {
+        Args: { p_description: string; p_kind: string; p_request_id: string }
+        Returns: string
       }
       provider_can_see_open: {
         Args: { p_request_id: string }
