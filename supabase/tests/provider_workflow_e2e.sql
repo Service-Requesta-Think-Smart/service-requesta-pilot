@@ -3,7 +3,6 @@
 DO $t$
 DECLARE c uuid:=gen_random_uuid(); p uuid:=gen_random_uuid(); p2 uuid:=gen_random_uuid(); a uuid:=gen_random_uuid(); x uuid:=gen_random_uuid();
  r uuid; q1 uuid; q2 uuid; cs uuid; n int:=0; s text; ok boolean;
- PROCEDURE_DUMMY int;
 BEGIN
  INSERT INTO auth.users(id,instance_id,aud,role,email,email_confirmed_at,raw_user_meta_data,created_at,updated_at) VALUES
   (c,'00000000-0000-0000-0000-000000000000','authenticated','authenticated','e2e-c@test.invalid',now(),'{}',now(),now()),
