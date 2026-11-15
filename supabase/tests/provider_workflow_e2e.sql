@@ -53,7 +53,7 @@ BEGIN
  BEGIN PERFORM public.marketplace_submit_quote(r,'Replace washer and reseat the kitchen tap',-1,55000,30000,false,'Standard washer','Within 3 days',null); RAISE EXCEPTION 'FAIL negative amount'; EXCEPTION WHEN OTHERS THEN IF SQLERRM LIKE 'FAIL%' THEN RAISE; END IF; n:=n+1; END;
  q1:=public.marketplace_submit_quote(r,'Replace washer and reseat the kitchen tap',15000,55000,30000,true,'Standard washer','Within 3 days',null);
  IF (SELECT total_cents FROM public.quotes WHERE id=q1)<>100000 THEN RAISE EXCEPTION 'FAIL total'; END IF; n:=n+1;
- BEGIN UPDATE public.quotes SET total_cents=1 WHERE id=q1; RAISE EXCEPTION 'FAIL quote editable'; EXCEPTION WHEN OTHERS THEN IF SQLERRM LIKE 'FAIL%' THEN RAISE; END IF; n:=n+1; END;
+ BEGIN UPDATE public.quotes SET labour_cents=1 WHERE id=q1; RAISE EXCEPTION 'FAIL quote editable'; EXCEPTION WHEN OTHERS THEN IF SQLERRM LIKE 'FAIL%' THEN RAISE; END IF; n:=n+1; END;
  q2:=public.marketplace_submit_quote(r,'Replace washer, cartridge and reseat the tap',15000,60000,35000,true,'Cartridge may be needed','Within 3 days',null);
  -- Customer: provider cannot approve; stale version rejected; both confirmations required
  BEGIN PERFORM public.marketplace_approve_quote(r,q2,true,true); RAISE EXCEPTION 'FAIL provider approves'; EXCEPTION WHEN OTHERS THEN IF SQLERRM LIKE 'FAIL%' THEN RAISE; END IF; n:=n+1; END;
