@@ -6,10 +6,11 @@
 - Added unit tests for the demo workflow transition rules.
 
 ## In progress
-- Lovable Git Sync is linked to GitHub repository `Service-Requesta-Think-Smart/service-requesta-pilot` (repository ID `1449315236`) and uses `main` as its active branch. The Lovable settings page displayed the former owner path, but GitHub resolves it to this same repository ID; the existing link was preserved.
-- The `backup-before-sync` branch was created from GitHub `main` before reconciliation, at commit `e09dbea8bc43a876a63e5fdc221252377e95433e`.
-- As of 2026-11-18, GitHub `main` is at `e09dbea8bc43a876a63e5fdc221252377e95433e`; the Lovable project still reports `80f3ba8662bb9870cc9fb00aa6716739dabacaeb`. GitHub's compare reports 8 commits ahead and 0 behind; the Lovable settings card displayed 7 commits ahead.
-- This documentation commit is intended to trigger a fresh GitHub push event. Confirm that Lovable advances to the resulting GitHub commit before treating the sync as reconciled. The GitHub-to-Lovable update and reverse Lovable-to-GitHub edit still need verification.
+- Lovable Git Sync is linked to GitHub repository `Service-Requesta-Think-Smart/service-requesta-pilot` (repository ID `1449315236`) and uses `main` as its active branch. The Lovable settings page still displays the former owner path `siyolisenovuna08-greatest/service-requesta-pilot`; GitHub resolves that path to the same repository ID and canonical organization owner. The existing project link was preserved.
+- The `backup-before-sync` branch points to the original GitHub `main` commit `e09dbea8bc43a876a63e5fdc221252377e95433e`, captured before reconciliation.
+- As of 2026-11-18, GitHub `main` is at `16912502803bd569372c05a1fc64a0545dca2344`; Lovable still reports `80f3ba8662bb9870cc9fb00aa6716739dabacaeb`. GitHub's commit comparison reports 9 commits ahead and 0 behind. Lovable's sync card reports 8 commits ahead and says the GitHub commits have not been pulled. The count discrepancy is unresolved.
+- The Lovable GitHub App is now installed for `Service-Requesta-Think-Smart` with repository access limited to `service-requesta-pilot`. This documentation commit is intended to trigger a fresh GitHub push event after that connection was added. Confirm that Lovable advances to the resulting GitHub commit before treating sync as reconciled.
+- The GitHub-to-Lovable pull remains unverified. The reverse Lovable-to-GitHub edit also remains unverified because the Lovable project is out of credits.
 
 ## Missing / known limitations
 - Demo state is local to the current browser and is not shared across roles, users, devices, or the real Supabase database.
