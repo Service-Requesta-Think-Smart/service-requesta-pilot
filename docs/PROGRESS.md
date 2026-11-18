@@ -1,16 +1,16 @@
 # Service-Requesta build progress
 
 ## Done
-- Added a direct `/preview` route for a clearly labelled, fictional marketplace workflow walkthrough.
+- Added a direct /preview route for a clearly labelled, fictional marketplace workflow walkthrough.
 - Added browser-local demo flows for separate identity/trade reviews, provider request acceptance, itemised quote approval, job progression, dual completion confirmation, support case resolution logging, and a simulated Yoco outcome. The preview does not call a payment API or move money.
 - Added unit tests for the demo workflow transition rules.
 
 ## In progress
-- Lovable Git Sync is linked to GitHub repository `Service-Requesta-Think-Smart/service-requesta-pilot` (repository ID `1449315236`) and uses `main` as its active branch. The Lovable settings page still displays the former owner path `siyolisenovuna08-greatest/service-requesta-pilot`; GitHub resolves that path to the same repository ID and canonical organization owner. The existing project link was preserved.
-- The `backup-before-sync` branch points to the original GitHub `main` commit `e09dbea8bc43a876a63e5fdc221252377e95433e`, captured before reconciliation.
-- As of 2026-11-18, GitHub `main` is at `16912502803bd569372c05a1fc64a0545dca2344`; Lovable still reports `80f3ba8662bb9870cc9fb00aa6716739dabacaeb`. GitHub's commit comparison reports 9 commits ahead and 0 behind. Lovable's sync card reports 8 commits ahead and says the GitHub commits have not been pulled. The count discrepancy is unresolved.
-- The Lovable GitHub App is now installed for `Service-Requesta-Think-Smart` with repository access limited to `service-requesta-pilot`. This documentation commit is intended to trigger a fresh GitHub push event after that connection was added. Confirm that Lovable advances to the resulting GitHub commit before treating sync as reconciled.
-- The GitHub-to-Lovable pull remains unverified. The reverse Lovable-to-GitHub edit also remains unverified because the Lovable project is out of credits.
+- Lovable Git Sync remains connected to Service-Requesta-Think-Smart/service-requesta-pilot (repository ID 1449315236) on main. Lovable's settings still show the former owner path siyolisenovuna08-greatest/service-requesta-pilot; GitHub resolves it to the same repository ID and canonical organization owner. The existing project link was preserved.
+- The backup-before-sync branch points to the original GitHub main commit e09dbea8bc43a876a63e5fdc221252377e95433e, captured before reconciliation.
+- At the last sync check before this note was updated, GitHub main was at 8858954219afa8393502a191e1c3d2b690349483 and Lovable still reported 80f3ba8662bb9870cc9fb00aa6716739dabacaeb. GitHub's commit comparison showed 10 commits ahead and 0 behind; Lovable's Git settings showed 9 commits ahead and said GitHub commits had not been pulled. Lovable also reported the last sync was 3 days ago. The count discrepancy remains unresolved.
+- The Lovable GitHub App is installed for Service-Requesta-Think-Smart with access limited to service-requesta-pilot. The documentation commit 8858954219afa8393502a191e1c3d2b690349483, pushed after installation, did not advance Lovable. This follow-up note will create another docs-only commit; that push also needs to be checked before sync can be considered reconciled.
+- GitHub-to-Lovable sync remains unverified and currently out of sync. The reverse Lovable-to-GitHub edit is unverified because the project is out of credits and Lovable reports that work is paused.
 
 ## Missing / known limitations
 - Demo state is local to the current browser and is not shared across roles, users, devices, or the real Supabase database.
@@ -24,6 +24,6 @@
 - Display the proposed 15% commission only as an illustrative calculation.
 
 ## Next three steps
-1. Run `bun run test`, `bun run lint`, and `bun run build` in the connected Lovable/GitHub project and address any failures.
-2. Open `/preview` in the Lovable preview and inspect the role-by-role demo on desktop and a small mobile viewport.
-3. After the preview is accepted, plan any persistent multi-user demo workflow as a separate task, with database/RLS changes reviewed before implementation.
+1. Ask Lovable Support to diagnose why GitHub pushes are not being pulled and why the former owner path is still displayed, while keeping the current repository link and branch history intact.
+2. After pull sync is restored and Lovable credits are available, make a minimal documentation edit in Lovable and confirm its commit appears on GitHub main.
+3. Confirm the Lovable and GitHub main commit SHAs match before relying on two-way sync.
