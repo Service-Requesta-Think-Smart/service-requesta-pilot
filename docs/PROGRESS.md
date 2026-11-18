@@ -6,7 +6,10 @@
 - Added unit tests for the demo workflow transition rules.
 
 ## In progress
-- Lovable preview availability depends on the connected project syncing the repository's `main` branch and completing its own build/deploy. The route is intended to be opened at `/preview` on the Lovable preview URL.
+- Lovable Git Sync is linked to GitHub repository `Service-Requesta-Think-Smart/service-requesta-pilot` (repository ID `1449315236`) and uses `main` as its active branch. The Lovable settings page displayed the former owner path, but GitHub resolves it to this same repository ID; the existing link was preserved.
+- The `backup-before-sync` branch was created from GitHub `main` before reconciliation, at commit `e09dbea8bc43a876a63e5fdc221252377e95433e`.
+- As of 2026-11-18, GitHub `main` is at `e09dbea8bc43a876a63e5fdc221252377e95433e`; the Lovable project still reports `80f3ba8662bb9870cc9fb00aa6716739dabacaeb`. GitHub's compare reports 8 commits ahead and 0 behind; the Lovable settings card displayed 7 commits ahead.
+- This documentation commit is intended to trigger a fresh GitHub push event. Confirm that Lovable advances to the resulting GitHub commit before treating the sync as reconciled. The GitHub-to-Lovable update and reverse Lovable-to-GitHub edit still need verification.
 
 ## Missing / known limitations
 - Demo state is local to the current browser and is not shared across roles, users, devices, or the real Supabase database.
